@@ -1,0 +1,8 @@
+{
+  "name": "Crossa",
+  "short_name": "Crossa",
+  "display": "standalone",
+  "background_color": "#0a0b10",
+  "theme_color": "#0a0b10",
+  "icons": [{ "src": "/brand/logo.png", "sizes": "1254x1254", "type": "image/png" }]
+}
