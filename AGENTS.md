@@ -36,6 +36,12 @@ Crossa snippets must match the current language foundation. Check `fun`, `re`, `
 
 Benchmark snapshots are development observations. Always disclose simulator/emulator and remote-endpoint context; never treat them as physical-device guarantees.
 
+## Documentation Depth Contract
+
+A public documentation page explains the complete user-facing contract of its topic. For a feature or API, document applicable syntax, parameters, properties, types, required/optional status, defaults, allowed values, units, compile-time validation, runtime behavior, ownership/lifetime, errors, Android mapping, iOS mapping, limitations, examples, and troubleshooting.
+
+Navigation summaries and short feature cards are not documentation. Do not publish an API or configuration page when a developer still needs Crossa source to discover supported options. Complex topics including `config.cra`, `CrossaRequest`, `@AsyncAfter`, Android integration, and iOS integration require comprehensive treatment. Accuracy takes precedence over concise copy.
+
 ## Validation
 
 Validate implementation with install, typecheck, lint, and production build. Do not add a test framework unless explicitly asked. Keep the static hosting requirement documented: unknown application routes must fall back to `/index.html`.

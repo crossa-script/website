@@ -15,7 +15,7 @@ export function CommandMenu({ open, onOpen, onClose }: CommandMenuProps): React.
   const reduceMotion = useReducedMotion();
   const results = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    return documentationCatalog.filter((entry) => !needle || `${entry.title} ${entry.description} ${entry.slug}`.toLowerCase().includes(needle)).slice(0, 8);
+    return documentationCatalog.filter((entry) => !needle || `${entry.title} ${entry.description} ${entry.slug} ${entry.keywords.join(" ")} ${entry.content}`.toLowerCase().includes(needle)).slice(0, 8);
   }, [query]);
 
   useEffect(() => {

@@ -37,6 +37,24 @@ React Router Data Mode owns navigation. Major route modules are lazy-loaded and 
 
 Documentation is local typed content. One catalog powers routes, sidebar, search, breadcrumbs, previous/next links, and sitemap entries. Each record preserves source repository and paths, and where available the Crossa commit used to verify the material. Markdown-like blocks are rendered from trusted static content; raw arbitrary HTML is not accepted.
 
+## Documentation Content Architecture
+
+Documentation follows this flow:
+
+```text
+Crossa source-of-truth
+    ↓
+curated website content
+    ↓
+typed document metadata
+    ↓
+documentation registry
+    ↓
+routes / navigation / search / related content
+```
+
+Crossa engineering sources remain canonical; the website explains their verified behavior rather than competing with the language specification. Reused reference data, such as configuration properties, request properties, HTTP methods, and CLI commands, has one typed source. UI components render documentation but do not define Crossa technical semantics.
+
 ## Design, Motion, and Accessibility
 
 The design is dark-first and technical: graphite surfaces, restrained spectral accents, code surfaces, diagrams, and crisp hierarchy. Semantic CSS variables define colors and components consume tokens rather than arbitrary palette values.
