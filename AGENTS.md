@@ -45,3 +45,9 @@ Navigation summaries and short feature cards are not documentation. Do not publi
 ## Validation
 
 Validate implementation with install, typecheck, lint, and production build. Do not add a test framework unless explicitly asked. Keep the static hosting requirement documented: unknown application routes must fall back to `/index.html`.
+
+## Public Product Experience
+
+Public-facing routes must explain Crossa through intentional product storytelling. Avoid generic SaaS construction, repetitive cards, decorative gradients and animation as a substitute for explaining the product. Prefer real code, diagrams, screenshots, artifact visuals, benchmark data and accessible interactive technical illustrations. Every major home section answers a distinct product question. Visuals must represent real Crossa architecture; never invent dashboards, features, usage numbers or performance claims. Images and diagrams are product content, not decoration.
+
+Product definitions live in `src/content/product`, assets in `src/assets/visuals`, and provenance in `design/visual-sources.md`. Keep SVG assets and their generator synchronized. Benchmark quantiles follow the retained platform harnesses. Scope public styles to `.product-page`; documentation remains independent.

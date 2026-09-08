@@ -5,30 +5,29 @@ import iosWarm from "./ios-warm-benchmark-result.json";
 
 export type BenchmarkPlatform = "android" | "ios";
 export type BenchmarkMode = "warm" | "cold";
-export type BenchmarkMetric = "p50" | "p95";
+export type BenchmarkMetric = "p50" | "p95" | "mean";
+export interface BenchmarkSample { readonly iteration: number; readonly nanos: number; readonly success: boolean; }
+export interface BenchmarkResult { readonly implementation: string; readonly p50Nanos: number; readonly p95Nanos: number; readonly meanNanos: number; readonly sampleCount: number; readonly failureCount: number; readonly samples: readonly BenchmarkSample[]; }
+export interface BenchmarkRun { readonly platform: BenchmarkPlatform; readonly mode: BenchmarkMode; readonly buildConfiguration: string; readonly artifactCommit: string; readonly artifactHash: string; readonly environment: string; readonly architecture: string; readonly endpoint: string; readonly warmups: number; readonly measured: number; readonly results: readonly BenchmarkResult[]; }
 
-export interface BenchmarkResult { readonly implementation: string; readonly p50Nanos: number; readonly p95Nanos: number; readonly sampleCount: number; }
-export interface BenchmarkRun { readonly platform: BenchmarkPlatform; readonly mode: BenchmarkMode; readonly buildConfiguration: "Release"; readonly artifactCommit: string; readonly environment: string; readonly endpoint: string; readonly results: readonly BenchmarkResult[]; }
-
-interface AndroidSummary { readonly implementation: string; readonly sampleCount: number; readonly medianNanos: number; readonly p95Nanos: number; }
-interface AndroidRaw { readonly metadata: { readonly deviceModel: string; readonly androidVersion: string; readonly buildType: string; readonly crossaSourceCommit: string; readonly endpoint: string; readonly mode: string; }; readonly summaries: readonly AndroidSummary[]; }
-interface IosSample { readonly implementation: string; readonly durationNanoseconds: number; readonly success: boolean; }
-interface IosRaw { readonly metadata: { readonly deviceModel: string; readonly systemVersion: string; readonly buildConfiguration: string; readonly crossaSourceCommit: string; readonly endpoint: string; readonly mode: string; }; readonly samples: readonly IosSample[]; }
-
-function percentile(values: readonly number[], ratio: number): number {
-  const sorted = [...values].sort((a, b) => a - b);
-  const index = Math.min(Math.max(Math.ceil(sorted.length * ratio) - 1, 0), Math.max(sorted.length - 1, 0));
-  return sorted[index] ?? 0;
+function quantile(values: readonly number[], ratio: number): number {
+  return values[Math.floor((values.length - 1) * ratio)] ?? 0;
 }
-
-function readAndroid(raw: AndroidRaw): BenchmarkRun {
-  return { platform: "android", mode: raw.metadata.mode.toLowerCase() as BenchmarkMode, buildConfiguration: raw.metadata.buildType === "release" ? "Release" : "Release", artifactCommit: raw.metadata.crossaSourceCommit, environment: `${raw.metadata.deviceModel} · Android ${raw.metadata.androidVersion} · emulator`, endpoint: raw.metadata.endpoint, results: raw.summaries.map((summary) => ({ implementation: summary.implementation, p50Nanos: summary.medianNanos, p95Nanos: summary.p95Nanos, sampleCount: summary.sampleCount })) };
+function summarize(samples: readonly { implementation: string; iteration: number; nanos: number; success: boolean }[]): readonly BenchmarkResult[] {
+  return [...new Set(samples.map((sample) => sample.implementation))].map((implementation) => {
+    const series = samples.filter((sample) => sample.implementation === implementation);
+    const values = series.filter((sample) => sample.success).map((sample) => sample.nanos).sort((a, b) => a - b);
+    return { implementation, samples: series, sampleCount: values.length, failureCount: series.length - values.length, p50Nanos: quantile(values, 0.5), p95Nanos: quantile(values, 0.95), meanNanos: values.length ? values.reduce((a, b) => a + b, 0) / values.length : 0 };
+  });
 }
-
-function readIos(raw: IosRaw): BenchmarkRun {
-  const grouped = new Map<string, number[]>();
-  raw.samples.filter((sample) => sample.success).forEach((sample) => grouped.set(sample.implementation, [...(grouped.get(sample.implementation) ?? []), sample.durationNanoseconds]));
-  return { platform: "ios", mode: raw.metadata.mode as BenchmarkMode, buildConfiguration: raw.metadata.buildConfiguration === "Release" ? "Release" : "Release", artifactCommit: raw.metadata.crossaSourceCommit, environment: `${raw.metadata.deviceModel} · ${raw.metadata.systemVersion} · simulator`, endpoint: raw.metadata.endpoint, results: [...grouped.entries()].map(([implementation, values]) => ({ implementation: implementation === "crossa" ? "Crossa" : "Alamofire", p50Nanos: percentile(values, 0.5), p95Nanos: percentile(values, 0.95), sampleCount: values.length })) };
+function readAndroid(raw: typeof androidWarm): BenchmarkRun {
+  const metadata = raw.metadata;
+  return { platform: "android", mode: metadata.mode.toLowerCase() === "warm" ? "warm" : "cold", buildConfiguration: metadata.buildType, artifactCommit: metadata.crossaSourceCommit, artifactHash: metadata.crossaArtifactSha256, environment: `${metadata.deviceModel} · Android ${metadata.androidVersion} · emulator`, architecture: metadata.abi, endpoint: metadata.endpoint, warmups: metadata.warmupIterations, measured: metadata.measuredIterations, results: summarize(raw.samples.map((sample) => ({ ...sample, nanos: sample.durationNanos }))) };
 }
-
-export const benchmarkRuns: readonly BenchmarkRun[] = [readAndroid(androidWarm as AndroidRaw), readAndroid(androidCold as AndroidRaw), readIos(iosWarm as IosRaw), readIos(iosCold as IosRaw)];
+function readIos(raw: typeof iosWarm): BenchmarkRun {
+  const metadata = raw.metadata;
+  return { platform: "ios", mode: metadata.mode === "warm" ? "warm" : "cold", buildConfiguration: metadata.buildConfiguration, artifactCommit: metadata.crossaSourceCommit, artifactHash: metadata.crossaArtifactChecksum, environment: `${metadata.deviceModel} · ${metadata.systemVersion} · simulator`, architecture: metadata.architecture, endpoint: metadata.endpoint, warmups: metadata.warmupIterations, measured: metadata.measuredIterations, results: summarize(raw.samples.map((sample) => ({ ...sample, implementation: sample.implementation === "crossa" ? "Crossa" : sample.implementation === "alamofire" ? "Alamofire" : sample.implementation, nanos: sample.durationNanoseconds }))) };
+}
+export const benchmarkRuns: readonly BenchmarkRun[] = [readAndroid(androidWarm), readAndroid(androidCold), readIos(iosWarm), readIos(iosCold)];
+export function metricValue(result: BenchmarkResult, metric: BenchmarkMetric): number { return metric === "p50" ? result.p50Nanos : metric === "p95" ? result.p95Nanos : result.meanNanos; }
+export function formatMilliseconds(nanos: number): string { return `${(nanos / 1_000_000).toFixed(2)} ms`; }

@@ -1,0 +1,26 @@
+[
+  {
+    "label": "Post.cra",
+    "language": "cra",
+    "value": "model Post(\n    userId: Int,\n    id: Int,\n    title: String,\n    body: String\n)\n",
+    "description": "The response contract: four typed fields retained in native model storage."
+  },
+  {
+    "label": "postRequests.cra",
+    "language": "cra",
+    "value": "import #Post.cra#\n\n@AsyncAfter\nfun fetchPosts(): List<Post> {\n    re CrossaRequest {\n        url: \"https://jsonplaceholder.typicode.com/posts\",\n        method: GET,\n        headers: {\n            \"X-Crossa-Scenario\": \"cli\",\n            \"Cache-Control\": \"no-cache, no-store, max-age=0\",\n            \"Pragma\": \"no-cache\",\n            \"Expires\": \"0\"\n        },\n        timeout: 10000\n    }\n}\n",
+    "description": "The request: a GET operation with headers, a timeout and a typed result."
+  },
+  {
+    "label": "postsRepository.cra",
+    "language": "cra",
+    "value": "import #postRequests.cra#\n\n@AsyncAfter\nfun getPosts(): List<Post> {\n    re fetchPosts()\n}\n",
+    "description": "The repository: an imported request exposed with terminal completion semantics."
+  },
+  {
+    "label": "config.cra",
+    "language": "cra",
+    "value": "config {\n    packageName: \"com.crossa.generated\",\n    baseUrl: \"https://jsonplaceholder.typicode.com\",\n    timeoutRequest: 10000,\n    commonHeaders: {\n        \"Accept\": \"application/json\",\n        \"X-Crossa-Demo\": \"android-example\",\n        \"Cache-Control\": \"no-cache, no-store, max-age=0\",\n        \"Pragma\": \"no-cache\",\n        \"Expires\": \"0\"\n    },\n    interceptor: {\n        enabled: true,\n        logRequests: true,\n        logResponses: true,\n        logHeaders: true,\n        logBody: false,\n        excludedHeaders: [\"Authorization\", \"Cookie\", \"Set-Cookie\"]\n    },\n    workerThreads: 2,\n    maxQueuedTasks: 16,\n    maxResponseBytes: 1048576,\n    maxJsonDepth: 32,\n    followRedirects: true\n}\n",
+    "description": "The project: package identity, shared headers and bounded runtime configuration."
+  }
+]
