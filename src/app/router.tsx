@@ -1,8 +1,10 @@
 import { createBrowserRouter } from "react-router";
+import { RouteLoading } from "../components/ui/RouteLoading";
 
 export const router = createBrowserRouter([
   {
     path: "/",
+    HydrateFallback: RouteLoading,
     lazy: () => import("../routes/layout/route"),
     children: [
       { index: true, lazy: () => import("../routes/home/route") },

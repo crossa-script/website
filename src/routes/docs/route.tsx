@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Link, Navigate, useLocation } from "react-router";
+import { applyDocumentMetadata } from "../../app/metadata";
 import { CodeBlock } from "../../components/ui/CodeBlock";
 import { PageTransition } from "../../components/ui/PageTransition";
 import { documentationCatalog, documentsInSection, getDocument, type DocumentationSection } from "../../content/docs/catalog";
@@ -57,7 +58,7 @@ export function Component(): React.JSX.Element {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const document = getDocument(location.pathname);
   const headings = useMemo(() => document?.content.split("\n").filter((line) => line.startsWith("## ") || line.startsWith("### ")).map((line) => line.replace(/^#{2,3} /, "")) ?? [], [document]);
-  useEffect(() => { if (document) window.document.title = `${document.title} — Crossa`; }, [document]);
+  useEffect(() => { if (document) applyDocumentMetadata(document.title, document.description, document.keywords, document.slug); }, [document]);
   if (!document) return <Navigate to="/docs" replace />;
   const index = documentationCatalog.findIndex((entry) => entry.slug === document.slug);
   const previous = documentationCatalog[index - 1];

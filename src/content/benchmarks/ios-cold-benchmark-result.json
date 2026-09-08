@@ -1,17 +1,14 @@
 {
   "metadata" : {
     "endpoint" : "https:\/\/jsonplaceholder.typicode.com\/posts",
-    "crossaArtifactChecksum" : "86889bb70f6d0e19ef094ce7496ea6032e46d92cc662d3d58117c7b75229e438",
     "buildConfiguration" : "Release",
     "measuredIterations" : 8,
     "deviceModel" : "iPhone15,3",
     "appVersion" : "1.0",
     "warmupIterations" : 2,
-    "crossaArtifact" : "release",
     "timestamp" : 1788862866.7426748,
     "systemVersion" : "Version 17.5 (Build 21F79)",
     "architecture" : "arm64",
-    "crossaSourceCommit" : "8c362e10fba65cbc2279f08c06eb5469e16a72e5",
     "endpointKind" : "remote",
     "mode" : "cold"
   },

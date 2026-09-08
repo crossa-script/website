@@ -7,8 +7,8 @@ const rect = (x,y,w,h,fill=colors.panel,stroke=colors.line) => `<rect x="${x}" y
 const line = (d, color=colors.line) => `<path d="${d}" fill="none" stroke="${color}" stroke-width="2"/>`;
 const save = (name,w,h,body) => writeFileSync(new URL(name+'.svg',directory),`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" fill="none"><g font-family="ui-monospace, SFMono-Regular, Consolas, monospace">${body}</g></svg>\n`);
 save('pipeline',640,630,
-rect(68,20,504,172)+text(90,52,'postsRepository.cra',16,colors.violet)+line('M68 68H572')+text(90,101,'@AsyncAfter',19,colors.violet)+text(90,133,'fun getPosts(): List<Post> {',19)+text(90,163,'    re fetchPosts()',19)+text(500,163,'}',19)+
-line('M320 192V225',colors.violet)+rect(136,225,368,66)+text(162,253,'CROSSA COMPILER',17,colors.violet)+text(162,278,'Parse → Validate → Typed IR',15,colors.muted)+line('M320 291V327',colors.blue)+
+rect(94,20,452,160)+text(116,47,'postsRepository.cra',13,colors.muted)+line('M94 62H546')+text(116,88,'@AsyncAfter',15,colors.violet)+text(116,111,'fun getPosts(): List<Post> {',15)+text(132,134,'re fetchPosts()',15)+text(116,157,'}',15)+
+line('M320 180V225',colors.violet)+rect(136,225,368,66)+text(162,253,'CROSSA COMPILER',17,colors.violet)+text(162,278,'Parse → Validate → Typed IR',15,colors.muted)+line('M320 291V327',colors.blue)+
 rect(104,327,432,103,'#111e30',colors.blue)+text(128,361,'Native C++ runtime',23,colors.blue)+text(128,389,'Schedule · HTTP · Decode',16)+text(128,412,'Models · Errors · Lifecycle',16,colors.muted)+line('M320 430V464H154V501M320 464H486V501',colors.blue)+
 rect(22,501,280,104)+rect(338,501,280,104)+text(42,533,'Android .aar',20,colors.orange)+text(42,562,'Kotlin API → JNI → .so',15,colors.muted)+text(358,533,'iOS .xcframework',20,colors.blue)+text(358,562,'Swift API → C ABI',15,colors.muted)+text(42,590,'Your Android UI',15)+text(358,590,'Your iOS UI',15));
 save('duplication',800,360,
@@ -45,7 +45,7 @@ text(16,30,'Without Crossa',19,colors.muted)+text(24,68,'Android',17)+text(205,6
 line('M90 238V263H180M267 238V263H180V298',colors.violet)+text(16,290,'With Crossa',16,colors.violet)+
 rect(64,311,232,68,'#111e30',colors.blue)+text(152,336,'.cra',16,colors.violet)+text(85,363,'Crossa native runtime',16,colors.blue)+line('M180 379V407H80V436M180 407H280V436',colors.blue)+text(41,460,'Android',18)+text(265,460,'iOS',18));
 save('pipeline-mobile',360,575,
-rect(10,10,340,143)+text(25,38,'postsRepository.cra',15,colors.violet)+line('M10 50H350')+text(25,77,'@AsyncAfter',15,colors.violet)+text(25,104,'fun getPosts(): List<Post> {',15)+text(25,133,'    re fetchPosts()  }',15)+line('M180 153V181',colors.violet)+
+rect(18,10,324,138)+text(36,34,'postsRepository.cra',12,colors.muted)+line('M18 47H342')+text(36,69,'@AsyncAfter',13,colors.violet)+text(36,89,'fun getPosts(): List<Post> {',12)+text(50,109,'re fetchPosts()',12)+text(36,129,'}',12)+line('M180 148V181',colors.violet)+
 rect(38,181,284,65)+text(55,207,'Crossa compiler',19,colors.violet)+text(55,231,'Parse → Validate → Typed IR',14,colors.muted)+line('M180 246V279',colors.blue)+
 rect(20,279,320,97,'#111e30',colors.blue)+text(40,311,'Native C++ runtime',21,colors.blue)+text(40,337,'Schedule · HTTP · Decode',15)+text(40,360,'Models · Errors · Lifecycle',15,colors.muted)+line('M180 376V412H92V443M180 412H270V443',colors.blue)+
 rect(10,443,164,113)+rect(186,443,164,113)+text(23,472,'Android',19,colors.orange)+text(23,497,'.aar',18,colors.orange)+text(23,522,'Kotlin → JNI',14)+text(23,545,'Native .so',14,colors.muted)+text(199,472,'iOS',19,colors.blue)+text(199,497,'.xcframework',15,colors.blue)+text(199,522,'Swift → C ABI',14)+text(199,545,'Native slices',14,colors.muted));

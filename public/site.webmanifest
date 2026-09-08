@@ -1,8 +1,14 @@
 {
   "name": "Crossa",
   "short_name": "Crossa",
+  "id": "/",
+  "description": "A compiler-powered native client runtime that generates Android and iOS APIs from shared .cra source.",
+  "lang": "en",
+  "categories": ["developer", "productivity", "utilities"],
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0a0b10",
   "theme_color": "#0a0b10",
-  "icons": [{ "src": "/brand/logo.png", "sizes": "1254x1254", "type": "image/png" }]
+  "icons": [{ "src": "/brand/logo.png", "sizes": "256x256", "type": "image/png" }]
 }

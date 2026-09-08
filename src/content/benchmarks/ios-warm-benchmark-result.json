@@ -9,11 +9,8 @@
     "buildConfiguration" : "Release",
     "mode" : "warm",
     "timestamp" : 1788862819.4527459,
-    "crossaSourceCommit" : "8c362e10fba65cbc2279f08c06eb5469e16a72e5",
     "endpointKind" : "remote",
-    "measuredIterations" : 8,
-    "crossaArtifactChecksum" : "86889bb70f6d0e19ef094ce7496ea6032e46d92cc662d3d58117c7b75229e438",
-    "crossaArtifact" : "release"
+    "measuredIterations" : 8
   },
   "samples" : [
     {

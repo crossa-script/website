@@ -1,0 +1,21 @@
+# Crossa
+
+Crossa is a C++20 compiler and native client runtime for typed `.cra` projects. It validates shared mobile client behavior and generates Android AAR and iOS XCFramework APIs backed by one native execution path.
+
+## Primary resources
+
+- [Documentation](/docs): Verified Crossa V0 documentation
+- [Getting started](/docs/getting-started/introduction): Product and compiler introduction
+- [First project](/docs/getting-started/first-project): End-to-end project setup
+- [Language overview](/docs/language/overview): `.cra` syntax and scope
+- [Networking](/docs/networking/overview): Request execution and policy
+- [Android integration](/docs/android/integration): Generated AAR workflow
+- [iOS integration](/docs/ios/integration): Generated XCFramework workflow
+- [Architecture](/docs/architecture/system-overview): Compiler, runtime and platform boundaries
+- [Benchmarks](/benchmarks): Retained release observations and raw samples
+- [Repositories](/repositories): Core and example source repositories
+
+## Source authority
+
+- [Crossa core](https://github.com/crossa-script/Crossa)
+- [Crossa organization](https://github.com/crossa-script)

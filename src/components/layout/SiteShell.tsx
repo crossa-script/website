@@ -31,7 +31,7 @@ export function SiteShell(): React.JSX.Element {
             <button className="search-trigger" type="button" onClick={() => setSearchOpen(true)} aria-label="Search documentation"><Search size={16} /><span>Search</span><kbd>⌘K</kbd></button>
             <a className="github-link" href="https://github.com/crossa-script/Crossa" target="_blank" rel="noreferrer"><GitHubMark size={17} /><span>GitHub</span></a>
             <Link className="button button--primary header-cta" to="/docs/getting-started">Get started</Link>
-            <button className="icon-button mobile-menu-button" type="button" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-label="Open navigation">{menuOpen ? <X size={20} /> : <Menu size={20} />}</button>
+            <button className="icon-button mobile-menu-button" type="button" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-label={menuOpen ? "Close navigation" : "Open navigation"}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button>
           </div>
         </div>
         <AnimatePresence>

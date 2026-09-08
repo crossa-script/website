@@ -67,6 +67,6 @@ Benchmark snapshots live in `src/content/benchmarks/`. They are copied from the 
 
 ## Static deployment
 
-This is a client-side React application. Serve `dist/` through a static host/CDN and rewrite unknown non-asset URLs to `/index.html`. `public/_redirects` provides a compatible Netlify-style fallback example; configure the equivalent rewrite on every host.
+This is a client-side React application with build-time SEO snapshots for every public and documentation route. Serve `dist/` through a static host/CDN and rewrite unknown non-asset URLs to `/index.html`. Existing generated route files must take precedence over the fallback rewrite.
 
-The local `sitemap.xml` uses relative app paths because a public canonical host has not been configured in this repository. Set canonical and sitemap URLs to the chosen production origin as part of deployment configuration; do not invent a domain in source.
+Set `SITE_URL` to the production origin when building, for example `SITE_URL=https://your-domain.example pnpm build`. Netlify's `URL` and Vercel's `VERCEL_PROJECT_PRODUCTION_URL` are also detected. The SEO generator writes absolute canonical URLs, route-specific HTML metadata, structured data, `robots.txt`, `sitemap.xml`, and `llms.txt`. A build without a deployment origin uses `http://localhost:4173` and is suitable only for local validation.
