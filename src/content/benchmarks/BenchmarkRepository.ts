@@ -20,9 +20,12 @@ function summarize(samples: readonly { implementation: string; iteration: number
     return { implementation, samples: series, sampleCount: values.length, failureCount: series.length - values.length, p50Nanos: quantile(values, 0.5), p95Nanos: quantile(values, 0.95), meanNanos: values.length ? values.reduce((a, b) => a + b, 0) / values.length : 0 };
   });
 }
+function summarizeAndroid(raw: typeof androidWarm): readonly BenchmarkResult[] {
+  return raw.summaries.map((summary) => ({ implementation: summary.implementation, p50Nanos: summary.medianNanos, p95Nanos: summary.p95Nanos, meanNanos: summary.meanNanos, sampleCount: summary.successCount, failureCount: summary.failureCount, samples: raw.samples.filter((sample) => sample.implementation === summary.implementation).map((sample) => ({ implementation: sample.implementation, iteration: sample.iteration, nanos: sample.durationNanos, success: sample.success })) }));
+}
 function readAndroid(raw: typeof androidWarm): BenchmarkRun {
   const metadata = raw.metadata;
-  return { platform: "android", mode: metadata.mode.toLowerCase() === "warm" ? "warm" : "cold", buildConfiguration: metadata.buildType, environment: `${metadata.deviceModel} · Android ${metadata.androidVersion} · emulator`, architecture: metadata.abi, endpoint: metadata.endpoint, warmups: metadata.warmupIterations, measured: metadata.measuredIterations, results: summarize(raw.samples.map((sample) => ({ ...sample, nanos: sample.durationNanos }))) };
+  return { platform: "android", mode: metadata.mode.toLowerCase() === "warm" ? "warm" : "cold", buildConfiguration: metadata.buildType, environment: `${metadata.deviceModel} · Android ${metadata.androidVersion} · emulator`, architecture: metadata.abi, endpoint: metadata.endpoint, warmups: metadata.warmupIterations, measured: metadata.measuredIterations, results: summarizeAndroid(raw) };
 }
 function readIos(raw: typeof iosWarm): BenchmarkRun {
   const metadata = raw.metadata;

@@ -18,27 +18,27 @@
       "sampleCount": 8,
       "successCount": 8,
       "failureCount": 0,
-      "medianNanos": 15800625,
-      "p95Nanos": 16105292,
-      "meanNanos": 2.612860425E7
+      "medianNanos": 16030000,
+      "p95Nanos": 18380000,
+      "meanNanos": 16980000
     },
     {
       "implementation": "Retrofit",
       "sampleCount": 8,
       "successCount": 8,
       "failureCount": 0,
-      "medianNanos": 13580959,
-      "p95Nanos": 14446167,
-      "meanNanos": 1.381882825E7
+      "medianNanos": 18690000,
+      "p95Nanos": 21670000,
+      "meanNanos": 28940000
     },
     {
       "implementation": "Ktor",
       "sampleCount": 8,
       "successCount": 8,
       "failureCount": 0,
-      "medianNanos": 15834333,
-      "p95Nanos": 16208708,
-      "meanNanos": 1.592099475E7
+      "medianNanos": 22990000,
+      "p95Nanos": 25460000,
+      "meanNanos": 24110000
     }
   ],
   "samples": [

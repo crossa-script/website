@@ -37,8 +37,10 @@ function upsertLink(selector: string, attributes: Readonly<Record<string, string
 
 function structuredData(metadata: SeoMetadata, canonical: string): object {
   const origin = window.location.origin;
+  const publisher = { "@type": "Person", "@id": `${origin}/#yazan-tarifi`, name: "Yazan Tarifi", url: "https://www.yazantarifi.com/", jobTitle: "Mobile Software Engineer", sameAs: ["https://github.com/Yazan98", "https://www.yazantarifi.com/", "https://www.linkedin.com/in/yazantarifi", "https://medium.com/@yazantarifi98"] };
   const graph: object[] = [
-    { "@type": "Organization", "@id": `${origin}/#organization`, name: "Crossa", url: origin, logo: { "@type": "ImageObject", url: `${origin}/brand/logo.png`, width: 256, height: 256 }, sameAs: ["https://github.com/crossa-script"] },
+    publisher,
+    { "@type": "Organization", "@id": `${origin}/#organization`, name: "Crossa Script", url: origin, logo: { "@type": "ImageObject", url: `${origin}/brand/logo.png`, width: 256, height: 256 }, founder: { "@id": `${origin}/#yazan-tarifi` }, sameAs: ["https://github.com/crossa-script", "https://www.yazantarifi.com/"] },
     { "@type": "WebSite", "@id": `${origin}/#website`, name: "Crossa", url: origin, description: pages[0]?.description, publisher: { "@id": `${origin}/#organization` }, inLanguage: "en" },
     { "@type": "SoftwareApplication", "@id": `${origin}/#software`, name: "Crossa", applicationCategory: "DeveloperApplication", operatingSystem: "Android, iOS, macOS, Linux", description: pages[0]?.description, url: origin, codeRepository: "https://github.com/crossa-script/Crossa", programmingLanguage: ["C++", "Kotlin", "Swift"] },
     { "@type": metadata.schemaType === "SoftwareApplication" ? "WebPage" : metadata.schemaType, "@id": `${canonical}#webpage`, url: canonical, name: metadata.title, headline: metadata.title, description: metadata.description, isPartOf: { "@id": `${origin}/#website` }, about: { "@id": `${origin}/#software` }, mainEntity: metadata.schemaType === "SoftwareApplication" ? { "@id": `${origin}/#software` } : undefined, inLanguage: "en" }
@@ -55,6 +57,8 @@ export function applyMetadata(metadata: SeoMetadata, path: string): void {
   upsertMeta('meta[name="keywords"]', { name: "keywords", content: metadata.keywords.join(", ") });
   upsertMeta('meta[name="robots"]', { name: "robots", content: robots });
   upsertMeta('meta[name="googlebot"]', { name: "googlebot", content: robots });
+  upsertMeta('meta[name="author"]', { name: "author", content: "Yazan Tarifi" });
+  upsertMeta('meta[name="publisher"]', { name: "publisher", content: "Crossa Script" });
   upsertMeta('meta[property="og:type"]', { property: "og:type", content: metadata.schemaType === "TechArticle" ? "article" : "website" });
   upsertMeta('meta[property="og:site_name"]', { property: "og:site_name", content: "Crossa" });
   upsertMeta('meta[property="og:locale"]', { property: "og:locale", content: "en_US" });

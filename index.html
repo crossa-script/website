@@ -8,7 +8,10 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" data-seo="true" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" data-seo="true" />
     <meta name="application-name" content="Crossa" />
-    <meta name="author" content="Crossa contributors" />
+    <meta name="author" content="Crossa Script contributors" />
+    <meta name="publisher" content="Crossa Script" />
+    <meta name="creator" content="Crossa Script" />
+    <meta name="copyright" content="Crossa Script" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="theme-color" content="#0a0b10" />
@@ -39,6 +42,24 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main>
+        <h1>Crossa — Native client runtime for Android and iOS</h1>
+        <p>Crossa lets mobile teams define typed client behavior once in <code>.cra</code>, validate it with a C++ compiler, and generate native Android AAR and iOS XCFramework APIs backed by one runtime.</p>
+        <h2>One client definition, two native platforms</h2>
+        <p>Share models, requests, repositories, scheduling, networking, and typed response decoding across Kotlin Android and Swift iOS applications while keeping platform-native APIs.</p>
+        <h2>Explore Crossa engineering</h2>
+        <h3>Compiler and native runtime</h3>
+        <p>The compiler parses and validates the project graph, lowers source into typed intermediate representation, and connects generated APIs to the native scheduler and transport runtime.</p>
+        <h3>Android AAR integration</h3>
+        <p>Generate a project-specific Android library for Jetpack Compose and Kotlin applications. The generated API exposes typed operations while the native runtime owns request execution and decoding.</p>
+        <h3>iOS XCFramework integration</h3>
+        <p>Generate an iOS XCFramework for SwiftUI applications with a stable C ABI boundary, typed models, cancellation, lifecycle handling, and native response decoding.</p>
+        <h2>Benchmark results</h2>
+        <p>Compare Crossa with Retrofit and Ktor on Android, and Alamofire on iOS. The benchmark explorer reports p50, p95, mean latency, successful samples, warm runs, and cold runs from the same measured request.</p>
+        <p><a href="/docs/getting-started/introduction">Read the documentation</a> · <a href="/benchmarks">View benchmark results</a> · <a href="/repositories">Browse source repositories</a></p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

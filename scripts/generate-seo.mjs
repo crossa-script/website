@@ -36,8 +36,10 @@ const absolute = (path) => `${origin}${path === "/" ? "/" : path}`;
 
 function schema(page) {
   const url = absolute(page.path);
+  const publisher = { "@type": "Person", "@id": `${origin}/#yazan-tarifi`, name: "Yazan Tarifi", url: "https://www.yazantarifi.com/", jobTitle: "Mobile Software Engineer", description: "Software engineer focused on native Android and iOS applications, Kotlin Multiplatform, Compose Multiplatform, SwiftUI, and scalable backend APIs.", sameAs: ["https://github.com/Yazan98", "https://www.yazantarifi.com/", "https://www.linkedin.com/in/yazantarifi", "https://medium.com/@yazantarifi98"] };
   const graph = [
-    { "@type": "Organization", "@id": `${origin}/#organization`, name: "Crossa", url: origin, logo: { "@type": "ImageObject", url: `${origin}/brand/logo.png`, width: 256, height: 256 }, sameAs: ["https://github.com/crossa-script"] },
+    { ...publisher },
+    { "@type": "Organization", "@id": `${origin}/#organization`, name: "Crossa Script", url: origin, logo: { "@type": "ImageObject", url: `${origin}/brand/logo.png`, width: 256, height: 256 }, founder: { "@id": `${origin}/#yazan-tarifi` }, sameAs: ["https://github.com/crossa-script", "https://www.yazantarifi.com/"] },
     { "@type": "WebSite", "@id": `${origin}/#website`, name: "Crossa", url: origin, description: publicPages[0].description, publisher: { "@id": `${origin}/#organization` }, inLanguage: "en" },
     { "@type": "SoftwareApplication", "@id": `${origin}/#software`, name: "Crossa", applicationCategory: "DeveloperApplication", operatingSystem: "Android, iOS, macOS, Linux", description: publicPages[0].description, url: origin, codeRepository: "https://github.com/crossa-script/Crossa", programmingLanguage: ["C++", "Kotlin", "Swift"] },
     { "@type": page.schemaType === "SoftwareApplication" ? "WebPage" : page.schemaType, "@id": `${url}#webpage`, url, name: page.title, headline: page.title, description: page.description, isPartOf: { "@id": `${origin}/#website` }, about: { "@id": `${origin}/#software` }, ...(page.path === "/" ? { mainEntity: { "@id": `${origin}/#software` } } : {}), inLanguage: "en", ...(modified ? { dateModified: modified } : {}) }
@@ -57,6 +59,8 @@ function render(page) {
     <meta name="keywords" content="${escapeHtml(page.keywords.join(", "))}" data-seo="true" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" data-seo="true" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" data-seo="true" />
+    <meta name="author" content="Yazan Tarifi" data-seo="true" />
+    <meta name="publisher" content="Crossa Script" data-seo="true" />
     <meta property="og:type" content="${type}" data-seo="true" />
     <meta property="og:site_name" content="Crossa" data-seo="true" />
     <meta property="og:locale" content="en_US" data-seo="true" />
