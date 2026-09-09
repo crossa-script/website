@@ -8,13 +8,15 @@ export interface DocumentationDefinition {
   readonly order: number;
   readonly sourceRepository: "crossa" | "android-example" | "ios-example";
   readonly sourcePaths: readonly string[];
+  readonly verifiedRelease: string;
   readonly verifiedCommit: string;
   readonly keywords: readonly string[];
   readonly related: readonly string[];
   readonly content: string;
 }
 
-const commit = "8c362e1";
+const release = "v0.0.13";
+const commit = "38e31ae42426be76c34d14ca1ec229a323a979ad";
 const core = ["README.md", "ARCHITECTURE.md", "docs/language/language-foundation.md"] as const;
 const network = ["docs/features/networking.md", "src/compiler/semantic/SemanticAnalyzer.cpp", "src/runtime/RuntimeConfiguration.cpp", "src/network/NetworkPolicy.cpp"] as const;
 const post = "```cra\nmodel Post(\n    userId: Int,\n    id: Int,\n    title: String,\n    body: String\n)\n```";
@@ -25,12 +27,12 @@ function doc(
   sourcePaths: readonly string[], content: string, keywords: readonly string[] = [], related: readonly string[] = [],
   sourceRepository: DocumentationDefinition["sourceRepository"] = "crossa",
 ): DocumentationDefinition {
-  return { slug, title, description, section, order, sourceRepository, sourcePaths, verifiedCommit: commit, content, keywords, related };
+  return { slug, title, description, section, order, sourceRepository, sourcePaths, verifiedRelease: release, verifiedCommit: commit, content, keywords, related };
 }
 
 export const documentationCatalog = [
   doc("/docs", "Documentation", "Verified Crossa V0 language, runtime, networking, artifact, and CLI documentation.", "start", 0, core, `# Crossa documentation
-Crossa is a C++20 compiler and native runtime for typed \`.cra\` projects. It validates source once, creates typed intermediate representation (IR), then executes native work or produces platform artifacts. This site is curated against Crossa commit \`${commit}\`; the core repository remains the authority.
+Crossa is a C++20 compiler and native runtime for typed \`.cra\` projects. It validates source once, creates typed intermediate representation (IR), then executes native work or produces platform artifacts. This site is curated against Crossa ${release} commit \`${commit}\`; the core repository remains the authority.
 
 ## Start here
 

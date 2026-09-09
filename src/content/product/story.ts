@@ -1,6 +1,7 @@
 import sourceFiles from "./source-files.json";
 
-export const verifiedCommit = "8c362e10fba65cbc2279f08c06eb5469e16a72e5";
+export const verifiedRelease = "v0.0.13";
+export const verifiedCommit = "38e31ae42426be76c34d14ca1ec229a323a979ad";
 export const projectFiles = sourceFiles;
 export const pipeline = [
   { title: ".cra source", detail: "A linked project of models, requests and configuration.", code: "import #postRequests.cra#\n\n@AsyncAfter\nfun getPosts(): List<Post> {\n    re fetchPosts()\n}" },
