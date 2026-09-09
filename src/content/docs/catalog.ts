@@ -242,7 +242,7 @@ At most one branch runs and each branch has its own lexical scope.
 
 ${post}
 
-A model field has \`name: Type\`. Duplicate fields are rejected and field order becomes native schema order. \`List<Int>\`, \`List<String>\`, and \`List<Post>\` are supported type forms; it takes exactly one valid element type. Native response decoding creates immutable \`NativeModel\`/ \`NativeList\` values; the temporary JSON DOM is released except for explicit \`Json\` results. Android/iOS can expose lazy native-backed views, so the result owner/runtime must remain alive.
+A model field has \`name: Type\`. Duplicate fields are rejected and field order becomes native schema order. \`List<Int>\`, \`List<String>\`, and \`List<Post>\` are supported type forms; it takes exactly one valid element type. Typed response decoding parses scalars, models, and lists directly against the validated schema, skips unknown fields, and creates immutable \`NativeModel\`/ \`NativeList\` values. Explicit \`Json\` results use the generic JSON representation. Android/iOS can expose lazy native-backed views, so the result owner/runtime must remain alive.
 
 ## Execution policy
 
@@ -380,10 +380,12 @@ The global values above establish defaults. A request may supply its own \`retry
 When \`requestCoalescing\` or request \`coalesce\` is enabled, equivalent requests may share native execution and terminal work is fanned out to their consumers. Cancellation remains per operation handle and must not release shared result ownership for another consumer.`, ["config.cra", "retryStatusCodes", "pinnedPublicKey", "authProviders", "telemetry", "multipart", "coalesce"], ["/docs/networking/crossa-request", "/docs/reference/request-and-config-reference", "/docs/networking/response-decoding-errors"]),
   doc("/docs/networking/response-decoding-errors", "Response decoding, errors, and cancellation", "Native typed decoding, CrossaError, distinct cancellation state, and operation lifecycle.", "networking", 50, ["docs/features/networking.md", "docs/runtime/memory-ownership.md", "docs/runtime/scheduling.md", "src/network/response/ResponseDecoder.cpp"], `# Response decoding, errors, and cancellation
 \`\`\`text
-response bytes → bounded native buffer → temporary JSON DOM → RuntimeValue / NativeModel / NativeList → platform view
+typed response bytes → bounded native buffer → direct schema decoder → RuntimeValue / NativeModel / NativeList → platform view
+
+explicit \`Json\` response bytes → bounded native buffer → generic JSON representation → platform value
 \`\`\`
 
-\`String\` receives bounded raw response text. \`Int\`, \`Long\`, \`Double\`, \`Bool\` require matching JSON scalars. \`Json\` accepts any JSON value. Models/lists decode recursively against validated IR schema into immutable native storage, after which the temporary DOM is released. A malformed or incompatible response is an error, never a partially valid model.
+\`String\` receives bounded raw response text. \`Int\`, \`Long\`, \`Double\`, \`Bool\` require matching JSON scalars. \`Json\` accepts any JSON value. Models/lists decode recursively against validated IR schema into immutable native storage without a generic DOM. Unknown fields are skipped; malformed JSON, duplicate fields, and incompatible responses are errors, never partially valid models.
 
 ## Failed is not Cancelled
 

@@ -67,6 +67,8 @@ Benchmark snapshots live in `src/content/benchmarks/`. They are copied from the 
 
 ## Static deployment
 
+Run `./scripts/build-and-deploy.sh` from this directory to build the website and synchronize `dist/` to the sibling `crossa-script.github.io` repository. To use a different Pages checkout, set `GITHUB_PAGES_DIR` before running the script.
+
 This is a client-side React application with build-time SEO snapshots for every public and documentation route. Serve `dist/` through a static host/CDN and rewrite unknown non-asset URLs to `/index.html`. Existing generated route files must take precedence over the fallback rewrite.
 
 Set `SITE_URL` to the production origin when building, for example `SITE_URL=https://your-domain.example pnpm build`. Netlify's `URL` and Vercel's `VERCEL_PROJECT_PRODUCTION_URL` are also detected. The SEO generator writes absolute canonical URLs, route-specific HTML metadata, structured data, `robots.txt`, `sitemap.xml`, and `llms.txt`. A build without a deployment origin uses `http://localhost:4173` and is suitable only for local validation.
